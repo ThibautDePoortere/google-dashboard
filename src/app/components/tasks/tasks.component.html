@@ -1,0 +1,14 @@
+<div class="wrap">
+    <h2>{{ taskListItem.title }}</h2>
+    <button class="bIcon" matTooltip="Pas lijst aan" (click)="ToonDetailsTaaklijst()"><i class="material-icons">edit</i></button>
+    <button class="bIcon" matTooltip="Maak nieuwe taak aan" (click)="ToonDetailsTaak()"><i class="material-icons">add</i></button>
+    <button class="bIcon" matTooltip="Wis voltooide taken" (click)="wisVoltooideTaken()"><i class="material-icons">delete_sweep</i></button>
+    <app-task-list-item-details *ngIf="DetailsTaaklijstZichtbaar" (annuleer)="VerbergDetailsTaaklijst()" [taskListId]="taskListItem.id" [taskListName]="taskListItem.title"></app-task-list-item-details>
+    <app-task-item-details *ngIf="DetailsTaakZichtbaar" (annuleer)="VerbergDetailsTaak()" [taskListId]="taskListItem.id"></app-task-item-details>
+    <!-- *ngIf="DetailsTaaklijstZichtbaar"  -->
+    <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" class="itemsRow">
+        <div *ngFor="let taskItem of taskItems" class="taskListColumn" fxLayout="column" fxFlex="25" fxFlex.lt-lg="49" fxFlex.lt-md="100" fxFlex.lt-sm="100">
+            <app-task-item *ngIf="!taskItem.parent" [subTasks]="subTaskItems" [task]="taskItem" [taskListId]="taskListId" class="itemWrap"></app-task-item>
+        </div>
+    </div>
+</div>

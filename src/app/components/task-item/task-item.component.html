@@ -1,0 +1,16 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title><mat-checkbox [(checked)]="isChecked" (click)="clickCheckbox(task.id)">{{ task.title }}</mat-checkbox></mat-card-title>
+        <mat-card-subtitle>{{ FormatDate(task.updated) }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div *ngFor="let subTaskItem of subTaskItems">
+            <app-task-item [task]="subTaskItem" [taskListId]="taskListId" class="itemWrap"></app-task-item>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="cardActions">
+            <button class="bIcon" matTooltip="Verwijder deze taak" (click)="DeleteTaskItem(task.id)"><i class="material-icons">delete</i></button>
+        </div>
+    </mat-card-actions>
+</mat-card>

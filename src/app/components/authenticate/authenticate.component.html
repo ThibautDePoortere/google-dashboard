@@ -1,0 +1,4 @@
+<div>
+    <button mat-flat-button color="warn" *ngIf="isSignedIn" (click)="logUit()">Log uit</button>
+    <button mat-flat-button color="primary" *ngIf="!isSignedIn" (click)="logIn()">Log in</button>
+</div>

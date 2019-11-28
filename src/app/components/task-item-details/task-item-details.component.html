@@ -1,0 +1,33 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title *ngIf="nieuweTaak">Aanmaken nieuwe taak</mat-card-title>
+        <mat-card-title *ngIf="!nieuweTaak">Bewerken taak</mat-card-title>
+        <mat-card-subtitle *ngIf="nieuweTaak">Vul onderstaande details in om een nieuwe taak te definiëren</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="details">
+        <mat-form-field>
+          <!-- <input matInput placeholder="Naam lijst" required> -->
+          <input matInput placeholder="Naam taak" [formControl]="titelFormControl" [errorStateMatcher]="titelErrorMatcher" [value]="titelWaarde" required>
+          <mat-error *ngIf="titelFormControl.hasError('required')">
+            <strong>Naam taak</strong> is verplicht.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Ouder:</mat-label>
+          <mat-select [(value)]="ouderWaarde">
+            <mat-option *ngFor="let taskZonderSubTask of tasksZonderSubTasks" [value]="taskZonderSubTask.id">
+              {{taskZonderSubTask.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="cardActions">
+          <button class="bIcon" matTooltip="Annuleer" (click)="annuleer.emit()"><i class="material-icons">clear</i></button>
+          <button class="bIcon" *ngIf="nieuweTaak && !titelFormControl.hasError('required')" matTooltip="Maak deze taak aan" (click)="MaakNieuweTaakAan(titelFormControl.value, ouderWaarde)"><i class="material-icons">check</i></button>
+          <button class="bIcon" *ngIf="!nieuweTaak && !titelFormControl.hasError('required')" matTooltip="Pas de gegevens van deze taak aan" (click)="PasGegevensTaakAan(titelFormControl.value, ouderWaarde)"><i class="material-icons">check</i></button>
+        </div>
+    </mat-card-actions>
+  </mat-card>

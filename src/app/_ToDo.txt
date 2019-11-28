@@ -1,0 +1,7 @@
+- Component voorzien die alle details van een taak weergeeft.
+- Route aanmaken die een taak weergeeft en bovenstaand component weergeeft
+- task-item-details verder uitbreiden met alle nodige aan te passen velden.
+
+
+PROBLEMEN:
+- updateEnkelSubTasks >> if in for loop komt niet goed!

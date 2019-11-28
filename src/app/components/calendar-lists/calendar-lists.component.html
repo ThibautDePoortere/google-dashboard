@@ -1,0 +1,13 @@
+<div class="wrap">
+    <h2>Kalenderlijsten:</h2>
+    <!-- <button class="bIcon" matTooltip="Maak nieuwe lijst aan" (click)="ToonDetailsTaaklijst()"><i class="material-icons">add</i></button> -->
+    <!-- <app-task-list-item-details *ngIf="DetailsTaaklijstZichtbaar" (annuleer)="VerbergDetailsTaaklijst()"></app-task-list-item-details> -->
+    <!-- <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" class="itemsRow">
+        <div *ngFor="let calendarListItem of calendarListItems" class="taskListColumn" fxLayout="column" fxFlex="49" fxFlex.lt-md="100">
+            <app-task-list-item [taskList]="calendarListItem" class="itemWrap"></app-task-list-item>
+        </div>
+    </div> -->
+    <div *ngFor="let calendarListItem of calendarListItems">
+        <p>{{ calendarListItem.summary }}</p>
+    </div>
+</div>

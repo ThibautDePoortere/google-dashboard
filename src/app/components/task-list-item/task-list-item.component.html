@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{ taskList.title }}</mat-card-title>
+        <mat-card-subtitle>{{ FormatDate(taskList.updated) }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+        <div class="cardActions">
+            <button class="bIcon" matTooltip="Bekijk taken in deze lijst" (click)="NavigateToTaskListItem(taskList.id)"><i class="material-icons">edit</i></button>
+            <button class="bIcon" matTooltip="Verwijder deze lijst" (click)="DeleteTaskListItem(taskList.id)"><i class="material-icons">delete</i></button>
+        </div>
+    </mat-card-actions>
+</mat-card>
