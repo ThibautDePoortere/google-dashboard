@@ -1,7 +1,8 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
 import { GapiRefService } from 'src/app/services/gapi-ref.service';
 import { GapiCalendarService } from 'src/app/services/gapi-calendar.service';
 import { GapiAuthenticateService } from 'src/app/services/gapi-authenticate.service';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-calendar-lists',
@@ -9,6 +10,8 @@ import { GapiAuthenticateService } from 'src/app/services/gapi-authenticate.serv
   styleUrls: ['./calendar-lists.component.css']
 })
 export class CalendarListsComponent implements OnInit {
+  @Output() selectedCalendarList = new EventEmitter<string>();
+  calendarListValue:string = '';
   isSignedIn:boolean;
   calendarListItems:any;
 
@@ -37,8 +40,6 @@ export class CalendarListsComponent implements OnInit {
   }
 
   aanpassenCalendarLists = (calendarLists) => {
-    console.log("CalnderList");
-    console.log(calendarLists);
     this.calendarListItems = calendarLists;
   }
 
@@ -48,6 +49,10 @@ export class CalendarListsComponent implements OnInit {
     } else {
       this.wisCalendarLists();
     }
+  }
+
+  changeSelectionCalendarList = () => {
+    this.selectedCalendarList.emit(this.calendarListValue);
   }
 
 

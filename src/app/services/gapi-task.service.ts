@@ -48,7 +48,6 @@ export class GapiTaskService {
     this.gapiRef.gapi.client.tasks.tasklists.insert({
       "title": naamLijst
     }).then((response) => {
-      console.log(response);
       this.getTaskLists();
       // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
       // Zo hoef je niet alle data te herladen wanener niet nodig!
@@ -61,7 +60,6 @@ export class GapiTaskService {
         'tasklist': taskListId,
         'title': nieuweNaam
       }).then((response) => {
-        console.log(response);
         //this.clearCompletedTasks(taskListId);
         this.getTaskLists();
         this.getTaskList(taskListId);
@@ -75,7 +73,6 @@ export class GapiTaskService {
     this.gapiRef.gapi.client.tasks.tasklists.delete({
       'tasklist': taskListId
     }).then((response) => {
-      console.log(response);
       this.getTaskLists();
       // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
       // Zo hoef je niet alle data te herladen wanener niet nodig!
@@ -123,7 +120,6 @@ export class GapiTaskService {
       "title": naamTaak,
       "parent": ouder
     }).then((response) => {
-      console.log(response);
       this.getTasks(taskListId);
       // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
       // Zo hoef je niet alle data te herladen wanener niet nodig!
@@ -143,7 +139,6 @@ export class GapiTaskService {
       'task': taskId,
       'status': status
     }).then((response) => {
-      console.log(response);
       //this.clearCompletedTasks(taskListId);
       this.getTasks(taskListId);
       // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
@@ -159,7 +154,6 @@ export class GapiTaskService {
         'title': nieuweNaam,
         'parent': ouder
       }).then((response) => {
-        console.log(response);
         //this.clearCompletedTasks(taskListId);
         this.getTasks(taskListId);
         this.getTask(taskListId, taskId);
@@ -173,7 +167,6 @@ export class GapiTaskService {
     this.gapiRef.gapi.client.tasks.tasks.clear({
       'tasklist': taskListId
     }).then((response) => {
-      console.log(response);
       this.getTasks(taskListId);
       // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
       // Zo hoef je niet alle data te herladen wanener niet nodig!
@@ -185,7 +178,6 @@ export class GapiTaskService {
       'tasklist': taskListId,
       'task': taskId
     }).then((response) => {
-      console.log(response);
       this.getTasks(taskListId);
       // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
       // Zo hoef je niet alle data te herladen wanener niet nodig!

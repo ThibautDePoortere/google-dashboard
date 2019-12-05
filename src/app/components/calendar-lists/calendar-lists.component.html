@@ -1,5 +1,5 @@
 <div class="wrap">
-    <h2>Kalenderlijsten:</h2>
+    <h3>Kalenderlijsten:</h3>
     <!-- <button class="bIcon" matTooltip="Maak nieuwe lijst aan" (click)="ToonDetailsTaaklijst()"><i class="material-icons">add</i></button> -->
     <!-- <app-task-list-item-details *ngIf="DetailsTaaklijstZichtbaar" (annuleer)="VerbergDetailsTaaklijst()"></app-task-list-item-details> -->
     <!-- <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" class="itemsRow">
@@ -7,7 +7,14 @@
             <app-task-list-item [taskList]="calendarListItem" class="itemWrap"></app-task-list-item>
         </div>
     </div> -->
-    <div *ngFor="let calendarListItem of calendarListItems">
-        <p>{{ calendarListItem.summary }}</p>
-    </div>
+    <form>
+        <mat-form-field>
+            <mat-label>Kalenderlijst:</mat-label>
+            <mat-select [(value)]="calendarListValue" (selectionChange)="changeSelectionCalendarList()">
+              <mat-option *ngFor="let calendarListItem of calendarListItems" [value]="calendarListItem.id">
+                {{calendarListItem.summary}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+    </form>
 </div>

@@ -65,8 +65,6 @@ export class TaskItemDetailsComponent implements OnInit {
   }
 
   aanpassenTasksZonderSubTasks = (tasks) => {
-    console.log("Taken ontvangen");
-    console.log(tasks);
     this.tasksZonderSubTasks = tasks;
   }
 
@@ -85,7 +83,6 @@ export class TaskItemDetailsComponent implements OnInit {
 
 
   MaakNieuweTaakAan = (naamTaak:string, ouder:string) => {
-    console.log("OuderWaarde: " + this.ouderWaarde);
     if(ouder==undefined) {
       ouder='';
     }

@@ -1,0 +1,3 @@
+<p>selectie: {{ selectedCalendarList }}</p>
+<app-calendar-lists (selectedCalendarList)="updateSelectedCalendarList($event)"></app-calendar-lists>
+<app-calendar-item [selectedCalendarList]="selectedCalendarList"></app-calendar-item>

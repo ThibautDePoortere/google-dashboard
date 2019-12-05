@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +25,8 @@ import { TaskListItemDetailsComponent } from './components/task-list-item-detail
 import { GoToHomeComponent } from './components/go-to-home/go-to-home.component';
 import { TaskItemDetailsComponent } from './components/task-item-details/task-item-details.component';
 import { CalendarListsComponent } from './components/calendar-lists/calendar-lists.component';
+import { CalendarWrapComponent } from './components/calendar-wrap/calendar-wrap.component';
+import { CalendarItemComponent } from './components/calendar-item/calendar-item.component';
 
 
 @NgModule({
@@ -38,6 +41,8 @@ import { CalendarListsComponent } from './components/calendar-lists/calendar-lis
     GoToHomeComponent,
     TaskItemDetailsComponent,
     CalendarListsComponent,
+    CalendarWrapComponent,
+    CalendarItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +57,7 @@ import { CalendarListsComponent } from './components/calendar-lists/calendar-lis
     MatIconModule,
     MatTooltipModule,
     MatSelectModule,
+    MatRadioModule,
     FormsModule,
     ReactiveFormsModule
   ],

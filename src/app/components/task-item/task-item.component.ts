@@ -45,7 +45,6 @@ export class TaskItemComponent implements OnInit {
     if(this.subTasks!=undefined) {
       for (let index = 0; index < this.subTasks.length; index++) {
         const element = this.subTasks[index];
-        console.log(element);
         if(element.parent==this.task.id) {
           this.subTaskItems.push(element);
         }
