@@ -71,7 +71,7 @@ export class TaskListItemDetailsComponent implements OnInit {
   }
 
   PasGegevensLijstAan = (naamLijst:string) => {
-    this.gapiTaskService.changeTitelTaskList(this.taskListId, naamLijst);
+    this.gapiTaskService.updateTitelTaskList(this.taskListId, naamLijst);
     this.annuleer.emit();
   }
 

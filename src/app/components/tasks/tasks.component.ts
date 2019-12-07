@@ -40,13 +40,13 @@ export class TasksComponent implements OnInit {
       });
     });
 
-    this.gapiTaskService.tasksZonderSubtasksObservable.subscribe((tasks) => {
+    this.gapiTaskService.tasksLevel0Observable.subscribe((tasks) => {
       this.ngZone.run(() => {
         this.aanpassenTasks(tasks);
       });
     });
 
-    this.gapiTaskService.enkelSubtasksObservable.subscribe((tasks) => {
+    this.gapiTaskService.tasksLevel1Observable.subscribe((tasks) => {
       this.ngZone.run(() => {
         this.aanpassenSubTasks(tasks);
       });

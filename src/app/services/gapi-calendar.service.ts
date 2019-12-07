@@ -8,50 +8,57 @@ import { BehaviorSubject } from 'rxjs';
 export class GapiCalendarService {
   maxCaldendarListsResult:number = 10;
 
-  calendarListSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  calendarListObservable = this.calendarListSubject.asObservable();
-
   calendarSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   calendarObservable = this.calendarSubject.asObservable();
+
+  calendarListSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  calendarListObservable = this.calendarListSubject.asObservable();
 
   calendarEventsSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   calendarEventsObservable = this.calendarEventsSubject.asObservable();
 
   constructor(private gapiRef:GapiRefService) { }
 
+  // =======================================================
+  // === CalendarList(s) ===================================
+  // =======================================================
   getCalendarLists = () => {
     this.gapiRef.gapi.client.calendar.calendarList.list({
-    }).then(this.updateCalendarList)
+    }).then(this.publishCalendarList)
   }
-
-  updateCalendarList = (response) => {
+  publishCalendarList = (response) => {
     this.calendarListSubject.next(response.result.items);
   }
+  // =======================================================
 
-  //gapi.client.calendars.get({ calendarId: "calendarId",  }); 
+
+  // =======================================================
+  // === Calendar ==========================================
+  // =======================================================
   getCalendar = (calendarId:string) => {
     this.gapiRef.gapi.client.calendar.calendars.get({
       'calendarId': calendarId
-    }).then(this.updateCalendar)
+    }).then(this.publishCalendar)
   }
-
-  updateCalendar = (response) => {
-    console.log("Metadata Response");
-    console.log(response);
-    console.log(response.description);
-    //this.calendarMetadataSubject.next(response.result.items);
+  publishCalendar = (response) => {
+    this.calendarSubject.next(response.result.items);
   }
+  // =======================================================
 
+
+  // =======================================================
+  // === CalendarEvent(s) ==================================
+  // =======================================================
   getCalendarEvents = (calendarId:string) => {
     this.gapiRef.gapi.client.calendar.events.list({
       'calendarId': calendarId
-    }).then(this.updateCalendarEvents)
+    }).then(this.publishCalendarEvents)
   }
-
-  updateCalendarEvents = (response) => {
+  publishCalendarEvents = (response) => {
     console.log("events Response");
     console.log(response);
     console.log(response.description);
     this.calendarEventsSubject.next(response.result.items);
   }
+  // =======================================================
 }

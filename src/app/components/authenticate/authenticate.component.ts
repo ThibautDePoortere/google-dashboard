@@ -24,8 +24,6 @@ export class AuthenticateComponent implements OnInit {
     this.isSignedIn = status;
   }
 
-
-  // === ACTIONS ===========================
   logIn = () => {
     this.gapiAuthService.authenticate();
   }

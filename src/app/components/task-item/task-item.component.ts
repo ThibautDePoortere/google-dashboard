@@ -38,7 +38,7 @@ export class TaskItemComponent implements OnInit {
   }
 
   clickCheckbox = (taskId:any) => {
-    this.gapiTaskService.changeStatusTask(this.taskListId, taskId, this.isChecked)
+    this.gapiTaskService.updateStatusTask(this.taskListId, taskId, this.isChecked)
   }
 
   getSubTasksVanDitItem = () => {

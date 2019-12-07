@@ -24,11 +24,8 @@ export class GapiAuthenticateService {
       discoveryDocs: this.gapiRef.discoveryDocs,
       scope: this.gapiRef.scopes
     }).then(() => {
-      this.gapiRef.gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateIsSigninStatus);
-      this.updateIsSigninStatus(this.gapiRef.gapi.auth2.getAuthInstance().isSignedIn.get());
-      // gapi.client.tasks.tasklists.list({
-      //   'maxResults': this.maxTaskListsResult
-      // }).then(this.updateTaskList);
+      this.gapiRef.gapi.auth2.getAuthInstance().isSignedIn.listen(this.publishSignInStatus);
+      this.publishSignInStatus(this.gapiRef.gapi.auth2.getAuthInstance().isSignedIn.get());
     }, function(error) {
       console.log(error);
     })
@@ -36,7 +33,9 @@ export class GapiAuthenticateService {
 
 
 
-  // Authenticate functions
+  // =======================================================
+  // === Authenticate ======================================
+  // =======================================================
   authenticate = () => {
     this.gapiRef.gapi.auth2.getAuthInstance().signIn();
   }
@@ -45,8 +44,8 @@ export class GapiAuthenticateService {
     this.gapiRef.gapi.auth2.getAuthInstance().signOut();
   }
 
-  updateIsSigninStatus = (isSignedIn:boolean) => {
+  publishSignInStatus = (isSignedIn:boolean) => {
     this.isSignedInSubject.next(isSignedIn);
   }
-
+  // =======================================================
 }

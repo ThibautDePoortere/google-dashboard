@@ -28,27 +28,17 @@ export class CalendarItemComponent implements OnInit {
       });
     });
 
-    // this.gapiCalendarService.calendarObservable.subscribe((metadata) => {
-    //   this.ngZone.run(() => {
-    //     this.aanpassenCalendarMetadata(metadata);
-    //   });
-    // });
-
     this.updateCalendarEvents();
-    //this.updateCalendarMetadata();
   }
 
   ngOnChanges() {
-    console.log("ngChange");
     this.updateCalendarEvents();
   }
 
   aanpassenIsSignedInStatus = (status) => {
     this.isSignedIn = status;
-    this.updateCalendarMetadata();
+    this.updateCalendarEvents();
   }
-
-
 
   aanpassenCalendarEvents = (events) => {
     this.calendarEvents = events;
@@ -75,35 +65,4 @@ export class CalendarItemComponent implements OnInit {
       this.wisCalendarEvents();
     }
   }
-
-
-
-
-  //------------------
-  aanpassenCalendarMetadata = (metadata) => {
-    this.calendarMetadata = metadata;
-    console.log("MetaData: ");
-    console.log(metadata);
-  }
-
-  updateCalendarMetadata = () => {
-    if(this.isSignedIn) {
-      this.laadCalendarMetadata();
-    } else {
-      this.wisCalendarMetadata();
-    }
-  }
-
-  wisCalendarMetadata = () => {
-    this.calendarMetadata = '';
-  }
-
-  laadCalendarMetadata = () => {
-    if(this.selectedCalendarList != '') {
-      this.gapiCalendarService.getCalendar(this.selectedCalendarList);
-    } else {
-      this.wisCalendarMetadata();
-    }
-  }
-
 }

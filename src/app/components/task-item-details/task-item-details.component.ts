@@ -50,7 +50,7 @@ export class TaskItemDetailsComponent implements OnInit {
       });
     });
 
-    this.gapiTaskService.tasksZonderSubtasksObservable.subscribe((tasks) => {
+    this.gapiTaskService.tasksLevel0Observable.subscribe((tasks) => {
       this.ngZone.run(() => {
         this.aanpassenTasksZonderSubTasks(tasks);
       });
@@ -91,7 +91,7 @@ export class TaskItemDetailsComponent implements OnInit {
   }
 
   PasGegevensTaakAan = (naamTaak:string, ouder:string) => {
-    this.gapiTaskService.changeTitelTask(this.taskListId, this.taskId, naamTaak, ouder);
+    this.gapiTaskService.updateTitelTask(this.taskListId, this.taskId, naamTaak, ouder);
     this.annuleer.emit();
   }
 }

@@ -8,63 +8,67 @@ import { ElementSchemaRegistry } from '@angular/compiler';
 })
 export class GapiTaskService {
   maxTaskListsResult:number = 10;
-
-  taskListsSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  taskListsObservable = this.taskListsSubject.asObservable();
   
   taskListSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
   taskListObservable = this.taskListSubject.asObservable();
 
-  tasksSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  tasksObservable = this.tasksSubject.asObservable();
+  taskListsSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  taskListsObservable = this.taskListsSubject.asObservable();
 
-  tasksZonderSubtasksSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  tasksZonderSubtasksObservable = this.tasksZonderSubtasksSubject.asObservable();
+  tasksLevel0Subject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  tasksLevel0Observable = this.tasksLevel0Subject.asObservable();
 
-  enkelSubtasksSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  enkelSubtasksObservable = this.enkelSubtasksSubject.asObservable();
+  tasksLevel1Subject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  tasksLevel1Observable = this.tasksLevel1Subject.asObservable();
 
-  taskSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
-  taskObservable = this.taskSubject.asObservable();
+  // tasksSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  // tasksObservable = this.tasksSubject.asObservable();
+
+  // taskSubject:BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  // taskObservable = this.taskSubject.asObservable();
 
 
   constructor(private gapiRef:GapiRefService) {
   }
 
-  // TASKLISTS
+  
+  // =======================================================
+  // === TaskList(s) =======================================
+  // =======================================================
+  getTaskList = (taskListId:string) => {
+    this.gapiRef.gapi.client.tasks.tasklists.get({
+      'tasklist': taskListId
+    }).then(this.publishTaskList)
+  }
+  publishTaskList = (response) => {
+    this.taskListSubject.next(response.result);
+  }
+
   getTaskLists = () => {
     this.gapiRef.gapi.client.tasks.tasklists.list({
       'maxResults': this.maxTaskListsResult
-    }).then(this.updateTaskLists)
+    }).then(this.publishTaskLists)
+  }
+  publishTaskLists = (response) => {
+    this.taskListsSubject.next(response.result.items);
   }
 
-  getTaskList:any = (taskListId:string) => {
-    this.gapiRef.gapi.client.tasks.tasklists.get({
-      'tasklist': taskListId
-    }).then(this.updateTaskList)
-  }
-
-  newTaskList:any = (naamLijst:string) => {
+  newTaskList = (naamLijst:string) => {
     this.gapiRef.gapi.client.tasks.tasklists.insert({
       "title": naamLijst
     }).then((response) => {
       this.getTaskLists();
-      // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
-      // Zo hoef je niet alle data te herladen wanener niet nodig!
     });
   }
 
-  changeTitelTaskList = (taskListId:string, nieuweNaam:string) => {
-    if(!(nieuweNaam == undefined || nieuweNaam == '')) {
+  updateTitelTaskList = (taskListId:string, nieuweNaamLijst:string) => {
+    if(!(nieuweNaamLijst == undefined || nieuweNaamLijst == '')) {
       this.gapiRef.gapi.client.tasks.tasklists.patch({
         'tasklist': taskListId,
-        'title': nieuweNaam
+        'title': nieuweNaamLijst
       }).then((response) => {
-        //this.clearCompletedTasks(taskListId);
         this.getTaskLists();
         this.getTaskList(taskListId);
-        // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
-        // Zo hoef je niet alle data te herladen wanener niet nodig!
       })
     }
   }
@@ -74,59 +78,77 @@ export class GapiTaskService {
       'tasklist': taskListId
     }).then((response) => {
       this.getTaskLists();
-      // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
-      // Zo hoef je niet alle data te herladen wanener niet nodig!
     });
   }
+  // =======================================================
 
 
 
 
 
-  // TASKS
+  // =======================================================
+  // === Task(s) ===========================================
+  // =======================================================
+  // getTask = (taskListId:string, taskId:string) => {
+  //   this.gapiRef.gapi.client.tasks.tasks.get({
+  //     'tasklist': taskListId,
+  //     'task': taskId
+  //   }).then(this.publishTask)
+  // }
+  // publishTask = (response) => {
+  //   // this.taskSubject.next(response.result);
+  // }
+
   getTasks = (taskListId:string) => {
     this.gapiRef.gapi.client.tasks.tasks.list({
       'tasklist': taskListId,
       'maxResults': this.maxTaskListsResult
-    }).then(this.updateTasks)
+    }).then(this.publishTasks)
+  }
+  publishTasks = (response) => {
+    this.publishTasksLevel1(response);
+    this.publishTasksLevel0(response);
+  }
+  publishTasksLevel0 = (response) => {
+    var tasksLevel0=[];
+    if(response.result.items!=undefined) {
+      for (let index = 0; index < response.result.items.length; index++) {
+        const element = response.result.items[index];
+        if(!element.parent) {
+          tasksLevel0.push(element);
+        }
+      }
+    } else {
+      tasksLevel0=[];
+    }
+    this.tasksLevel0Subject.next(tasksLevel0)
+  }
+  publishTasksLevel1 = (response) => {
+    var tasksLevel1=[];
+    if(response.result.items!=undefined) {
+      for (let index = 0; index < response.result.items.length; index++) {
+        const element = response.result.items[index];
+        if(element.parent) {
+          tasksLevel1.push(element);
+        }
+      }
+    } else {
+      tasksLevel1=[];
+    }
+    this.tasksLevel1Subject.next(tasksLevel1)
   }
 
-  // getTasksZonderSubtasks = (taskListId:string) => {
-  //   this.gapiRef.gapi.client.tasks.tasks.list({
-  //     'tasklist': taskListId,
-  //     'maxResults': this.maxTaskListsResult
-  //   }).then(this.updateTasksZonderSubTasks)
-  // }
-
-  // getEnkelSubtasks = (taskListId:string, parentTaskId:string) => {
-  //   console.log("taskListId: " + taskListId);
-  //   console.log("parentTaskId: " + parentTaskId);
-  //   this.gapiRef.gapi.client.tasks.tasks.list({
-  //     'tasklist': taskListId,
-  //     'maxResults': this.maxTaskListsResult
-  //   }).then(this.updateEnkelSubTasks)
-  // }
-
-  getTask = (taskListId:string, taskId:string) => {
-    this.gapiRef.gapi.client.tasks.tasks.get({
-      'tasklist': taskListId,
-      'task': taskId
-    }).then(this.updateTask)
-  }
-
-  newTask:any = (taskListId:string, naamTaak:string, ouder:string) => {
+  newTask:any = (taskListId:string, naamTask:string, ouder:string) => {
     this.gapiRef.gapi.client.tasks.tasks.insert({
       "tasklist": taskListId,
-      "title": naamTaak,
+      "title": naamTask,
       "parent": ouder
     }).then((response) => {
       this.getTasks(taskListId);
-      // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
-      // Zo hoef je niet alle data te herladen wanener niet nodig!
     });
   }
 
-  changeStatusTask = (taskListId:string, taskId:string, isChecked:boolean) => {
+  updateStatusTask = (taskListId:string, taskId:string, isChecked:boolean) => {
     status="";
     if(isChecked) {
       status="needsAction";
@@ -139,38 +161,21 @@ export class GapiTaskService {
       'task': taskId,
       'status': status
     }).then((response) => {
-      //this.clearCompletedTasks(taskListId);
       this.getTasks(taskListId);
-      // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
-      // Zo hoef je niet alle data te herladen wanener niet nodig!
     })
   }
 
-  changeTitelTask = (taskListId:string, taskId:string, nieuweNaam:string, ouder:string) => {
-    if(!(nieuweNaam == undefined || nieuweNaam == '')) {
+  updateTitelTask = (taskListId:string, taskId:string, nieuweNaamTask:string, ouder:string) => {
+    if(!(nieuweNaamTask == undefined || nieuweNaamTask == '')) {
       this.gapiRef.gapi.client.tasks.tasks.patch({
         'tasklist': taskListId,
         'task': taskId,
-        'title': nieuweNaam,
+        'title': nieuweNaamTask,
         'parent': ouder
       }).then((response) => {
-        //this.clearCompletedTasks(taskListId);
         this.getTasks(taskListId);
-        this.getTask(taskListId, taskId);
-        // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
-        // Zo hoef je niet alle data te herladen wanener niet nodig!
       })
     }
-  }
-
-  clearCompletedTasks = (taskListId:string) => {
-    this.gapiRef.gapi.client.tasks.tasks.clear({
-      'tasklist': taskListId
-    }).then((response) => {
-      this.getTasks(taskListId);
-      // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
-      // Zo hoef je niet alle data te herladen wanener niet nodig!
-    })
   }
 
   deleteTask = (taskListId:string, taskId:string) => {
@@ -179,58 +184,15 @@ export class GapiTaskService {
       'task': taskId
     }).then((response) => {
       this.getTasks(taskListId);
-      // Kijken om bovenstaande aan te passeen: Zoeken in response naar return code 'status' als deze in 200 is, is dit gelukt.
-      // Zo hoef je niet alle data te herladen wanener niet nodig!
     })
   }
 
-
-  // UPDATES
-  updateTaskLists = (response) => {
-    this.taskListsSubject.next(response.result.items);
+  clearCompletedTasks = (taskListId:string) => {
+    this.gapiRef.gapi.client.tasks.tasks.clear({
+      'tasklist': taskListId
+    }).then((response) => {
+      this.getTasks(taskListId);
+    })
   }
-
-  updateTaskList = (response) => {
-    this.taskListSubject.next(response.result);
-  }
-
-  updateTasks = (response) => {
-    this.tasksSubject.next(response.result.items);
-    this.updateEnkelSubTasks(response);
-    this.updateTasksZonderSubTasks(response);
-  }
-
-  updateTasksZonderSubTasks = (response) => {
-    var tasksZonderSubTasks=[];
-    if(response.result.items!=undefined) {
-      for (let index = 0; index < response.result.items.length; index++) {
-        const element = response.result.items[index];
-        if(!element.parent) {
-          tasksZonderSubTasks.push(element);
-        }
-      }
-    } else {
-      tasksZonderSubTasks=[];
-    }
-    this.tasksZonderSubtasksSubject.next(tasksZonderSubTasks)
-  }
-
-  updateEnkelSubTasks = (response) => {
-    var enkelSubTasks=[];
-    if(response.result.items!=undefined) {
-      for (let index = 0; index < response.result.items.length; index++) {
-        const element = response.result.items[index];
-        if(element.parent) {
-          enkelSubTasks.push(element);
-        }
-      }
-    } else {
-      enkelSubTasks=[];
-    }
-    this.enkelSubtasksSubject.next(enkelSubTasks)
-  }
-
-  updateTask = (response) => {
-    this.taskSubject.next(response.result);
-  }
+  // =======================================================
 }

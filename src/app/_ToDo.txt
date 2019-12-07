@@ -2,6 +2,5 @@
 - Route aanmaken die een taak weergeeft en bovenstaand component weergeeft
 - task-item-details verder uitbreiden met alle nodige aan te passen velden.
 
-
-PROBLEMEN:
-- updateEnkelSubTasks >> if in for loop komt niet goed!
+- Controleren wat mogelijk/niet mogelijk is wanneer uitgelegd
+- Layout aanpassen zodat handig is!
