@@ -1,0 +1,9 @@
+<div class="wrap">
+    <h4>Agenda gebeurtenissen:</h4>
+    <!-- <app-calendar-event-item-details *ngIf="DetailsCalendarEventZichtbaar && selectedCalendarId" [calendarId]="selectedCalendarId" (annuleer)="VerbergDetailsCalendarEvents()"></app-calendar-event-item-details> -->
+    <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" class="itemsRow">
+        <div *ngFor="let calendarEventItem of calendarEventItems" class="taskListColumn" fxLayout="column" fxFlex="49" fxFlex.lt-md="100">
+            <app-calendar-event-item [calendarId]="selectedCalendarId" [calendarEvent]="calendarEventItem" class="itemWrap"></app-calendar-event-item>
+        </div>
+    </div>
+</div>

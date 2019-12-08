@@ -1,0 +1,9 @@
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapButtonsItem {
+    display: inline-block;
+    margin: 5px;
+}

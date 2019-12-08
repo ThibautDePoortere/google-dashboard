@@ -22,11 +22,14 @@ import { TaskListItemComponent } from './components/task-list-item/task-list-ite
 import { TaskItemComponent } from './components/task-item/task-item.component';
 
 import { TaskListItemDetailsComponent } from './components/task-list-item-details/task-list-item-details.component';
-import { GoToHomeComponent } from './components/go-to-home/go-to-home.component';
 import { TaskItemDetailsComponent } from './components/task-item-details/task-item-details.component';
 import { CalendarListsComponent } from './components/calendar-lists/calendar-lists.component';
 import { CalendarWrapComponent } from './components/calendar-wrap/calendar-wrap.component';
-import { CalendarItemComponent } from './components/calendar-item/calendar-item.component';
+import { HeaderComponent } from './components/header/header.component';
+import { CalendarEventsComponent } from './components/calendar-events/calendar-events.component';
+import { CalendarEventItemComponent } from './components/calendar-event-item/calendar-event-item.component';
+import { CalendarEventItemDetailsComponent } from './components/calendar-event-item-details/calendar-event-item-details.component';
+import { WrapHomeComponent } from './components/wrap-home/wrap-home.component';
 
 
 @NgModule({
@@ -38,11 +41,14 @@ import { CalendarItemComponent } from './components/calendar-item/calendar-item.
     TaskListItemComponent,
     TaskItemComponent,
     TaskListItemDetailsComponent,
-    GoToHomeComponent,
     TaskItemDetailsComponent,
     CalendarListsComponent,
     CalendarWrapComponent,
-    CalendarItemComponent,
+    HeaderComponent,
+    CalendarEventsComponent,
+    CalendarEventItemComponent,
+    CalendarEventItemDetailsComponent,
+    WrapHomeComponent,
   ],
   imports: [
     BrowserModule,

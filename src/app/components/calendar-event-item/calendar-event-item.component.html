@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title *ngIf="!bewerken">{{ calendarEvent.summary }}</mat-card-title>
+        <mat-card-title><mat-form-field *ngIf="bewerken">
+            <input matInput placeholder="Naam event" [formControl]="titelFormControl" [errorStateMatcher]="titelErrorMatcher" [value]="titelWaarde" required>
+            <mat-error *ngIf="titelFormControl.hasError('required')">
+                <strong>Naam event</strong> is verplicht.
+            </mat-error>
+        </mat-form-field></mat-card-title>
+        <mat-card-subtitle>{{ FormatDate(calendarEvent.updated) }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions>
+        <div class="cardActions">
+            <button *ngIf="!bewerken" class="bIcon" matTooltip="Bewerk gebeurtenis" (click)="EditCalendarEventItem()"><i class="material-icons">edit</i></button>
+            <button *ngIf="bewerken" class="bIcon" matTooltip="Annuleer" (click)="cancelEditCalendarEventItem()"><i class="material-icons">clear</i></button>
+            <button *ngIf="bewerken && !titelFormControl.hasError('required')" class="bIcon" matTooltip="update gebeurtenis" (click)="updateCalendarEventItem(calendarId, calendarEvent.id, titelFormControl.value)"><i class="material-icons">check</i></button>
+            <button class="bIcon" matTooltip="Verwijder deze gebeurtenis" (click)="DeleteCalendarEventItem(calendarId, calendarEvent.id)"><i class="material-icons">delete</i></button>
+        </div>
+    </mat-card-actions>
+</mat-card>

@@ -16,7 +16,6 @@ export class CalendarWrapComponent implements OnInit {
   updateSelectedCalendarList = (selectedList:string) => {
     if(selectedList != '') {
       this.ngZone.run(() => {
-        console.log("Selected list output: " + selectedList);
         this.selectedCalendarList = selectedList;
       })
     }

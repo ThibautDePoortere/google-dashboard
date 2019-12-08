@@ -55,10 +55,41 @@ export class GapiCalendarService {
     }).then(this.publishCalendarEvents)
   }
   publishCalendarEvents = (response) => {
-    console.log("events Response");
-    console.log(response);
-    console.log(response.description);
     this.calendarEventsSubject.next(response.result.items);
+  }
+
+  newCalendarEvent = (calendarId:string, naamEvent:string, startTijdCalendarEvent:string, eindTijdCalendarEvent:string) => {
+    console.log(startTijdCalendarEvent);
+    console.log(new Date(startTijdCalendarEvent));
+    console.log(eindTijdCalendarEvent);
+    console.log(new Date(eindTijdCalendarEvent));
+    this.gapiRef.gapi.client.calendar.events.insert({
+      'calendarId': calendarId,
+      'summary': naamEvent,
+      'start': new Date("2020"),
+      'end': new Date(eindTijdCalendarEvent)
+    }).then((result) => {
+      this.getCalendarEvents(calendarId)
+    })
+  }
+
+  updateTitelCalendarEvent = (calendarId:string, calendarEventId:string, naamEvent:string) => {
+    this.gapiRef.gapi.client.calendar.events.patch({
+      'calendarId': calendarId,
+      'eventId': calendarEventId,
+      'summary': naamEvent
+    }).then((result) => {
+      this.getCalendarEvents(calendarId);
+    })
+  }
+
+  deleteCalendarEvent = (calendarId:string, calendarEventId:string) => {
+    this.gapiRef.gapi.client.calendar.events.delete({
+      'calendarId': calendarId,
+      'eventId': calendarEventId
+    }).then((result) => {
+      this.getCalendarEvents(calendarId)
+    })
   }
   // =======================================================
 }

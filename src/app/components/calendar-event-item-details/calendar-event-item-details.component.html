@@ -1,0 +1,36 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Aanmaken nieuwe gebeurtenis</mat-card-title>
+        <mat-card-subtitle>Vul onderstaande details in om een nieuwe gebeurtenis te definiëren</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="details">
+        <mat-form-field>
+          <input matInput placeholder="Naam gebeurtenis" [formControl]="titelFormControl" [errorStateMatcher]="titelErrorMatcher" [value]="titelWaarde" required>
+          <mat-error *ngIf="titelFormControl.hasError('required')">
+            <strong>Naam gebeurtenis</strong> is verplicht.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <p>Starttijd (mm/dd/jjjj uu:mm):</p>
+          <input matInput placeholder="Starttijd (mm/dd/jjjj uu:mm)" [formControl]="startTijdFormControl" [errorStateMatcher]="startTijdErrorMatcher" [value]="startTijdWaarde" required>
+          <mat-error *ngIf="startTijdFormControl.hasError('required')">
+            <strong>Starttijd gebeurtenis</strong> is verplicht.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <p>Eindtijd (mm/dd/jjjj uu:mm):</p>
+          <input matInput placeholder="Eindtijd (mm/dd/jjjj uu:mm)" [formControl]="eindTijdFormControl" [errorStateMatcher]="eindTijdErrorMatcher" [value]="eindTijdWaarde" required>
+          <mat-error *ngIf="eindTijdFormControl.hasError('required')">
+            <strong>Eindtijd gebeurtenis</strong> is verplicht.
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="cardActions">
+          <button class="bIcon" matTooltip="Annuleer" (click)="annuleer.emit()"><i class="material-icons">clear</i></button>
+          <button class="bIcon" *ngIf="!titelFormControl.hasError('required') && !startTijdFormControl.hasError('required') && !eindTijdFormControl.hasError('required')" matTooltip="Maak deze gebeurtenis aan" (click)="MaakNieuwCalendarEventAan(titelFormControl.value, startTijdFormControl.value, eindTijdFormControl.value)"><i class="material-icons">check</i></button>
+        </div>
+    </mat-card-actions>
+  </mat-card>
