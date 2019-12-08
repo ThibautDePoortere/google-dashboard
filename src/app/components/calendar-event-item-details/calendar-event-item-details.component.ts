@@ -28,13 +28,13 @@ export class CalendarEventItemDetailsComponent implements OnInit {
   ]);
   titelErrorMatcher = new MyErrorStateMatcher();
 
-  startTijdaarde:string = '';
+  startTijdWaarde:string = '';
   startTijdFormControl = new FormControl('', [
     Validators.required
   ]);
   startTijdErrorMatcher = new MyErrorStateMatcher();
 
-  eindTijdaarde:string = '';
+  eindTijdWaarde:string = '';
   eindTijdFormControl = new FormControl('', [
     Validators.required
   ]);
